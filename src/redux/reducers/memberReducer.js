@@ -1,10 +1,7 @@
 import { ActionTypes } from "../constans/actionTypes";
 
 const initialState = {
-    members : [ {
-        id:[]
-    }
-        
+    members : [
     ],
     filterdMembers : [ 
     ]
