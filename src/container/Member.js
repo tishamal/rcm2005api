@@ -37,7 +37,7 @@ const Member = () => {
     const classes = useStyles();
     const members = useSelector((state) => state.allMembers.filterdMembers)
     const renderList =  members.map((member) => {
-    const {id,Fname,Lname,city,phone_number1,phone_number2,nic,blood,profession,profession_add} = member;
+    const {id,Fname,Lname,city,phone_number1,phone_number2,country,blood,profession,profession_add} = member;
     const imgSrc = 'https://2005-rcm-photos.s3.amazonaws.com/'+id+'.jpeg';   
     return (  
         <Grid item md={6} className="sections">
@@ -60,7 +60,7 @@ const Member = () => {
                         Whatsapp Id {phone_number1}
                     </Typography>
                     <Typography color="default">
-                        Lives in - {city}
+                        Lives in - {city}  {country}
                     </Typography>
                     <Typography color="default">
                         {blood}
