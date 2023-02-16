@@ -1,0 +1,8 @@
+{
+    "appId": "io.ionic.oba2005",
+    "appName": "oba2005",
+    "bundledWebRuntime": false,
+    "npmClient": "npm",
+    "webDir": "build",
+    "cordova": {}
+  }

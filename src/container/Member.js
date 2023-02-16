@@ -38,7 +38,8 @@ const Member = () => {
     const members = useSelector((state) => state.allMembers.filterdMembers)
     const renderList =  members.map((member) => {
     const {id,Fname,Lname,city,phone_number1,phone_number2,country,blood,profession,profession_add} = member;
-    const imgSrc = 'https://2005-rcm-photos.s3.amazonaws.com/'+id+'.jpeg';   
+    const imgSrc = 'https://2005-rcm-photos.s3.amazonaws.com/'+id+'.jpeg';  
+    const whatsapplink = 'https://wa.me/'+phone_number1;
     return (  
         <Grid item md={6} className="sections">
             <Card className={classes.root}>
@@ -57,7 +58,7 @@ const Member = () => {
                         <b>{profession} {profession_add}</b>
                     </Typography>
                     <Typography variant="subtitle2" color="textSecondary">
-                        Whatsapp Id {phone_number1}
+                        Whatsapp Id <a href={whatsapplink} >{phone_number1}</a>
                     </Typography>
                     <Typography color="default">
                         Lives in - {city}  {country}
