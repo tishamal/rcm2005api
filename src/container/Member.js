@@ -1,7 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
-import {Typography,Grid, Paper, Card, CardContent, CardMedia, Box} from '@material-ui/core';
+import {Typography,Grid, Paper, Card, CardContent, CardMedia, Box, Button} from '@material-ui/core';
+import { useHistory } from "react-router-dom"; 
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,49 +36,58 @@ const useStyles = makeStyles((theme) => ({
 
 const Member = () => {
     const classes = useStyles();
-    const members = useSelector((state) => state.allMembers.filterdMembers)
-    const renderList =  members.map((member) => {
-    const {id,Fname,Lname,city,phone_number1,phone_number2,country,blood,profession,profession_add} = member;
-    const imgSrc = 'https://2005-rcm-photos.s3.amazonaws.com/'+id+'.jpeg';  
-    const whatsapplink = 'https://wa.me/'+phone_number1;
-    return (  
-        <Grid item md={6} className="sections">
-            <Card className={classes.root}>
-                <CardMedia
-                    className={classes.cover}
-                    image={imgSrc}
-                    title={Fname+' '+Lname}
-                />
+    const history = useHistory(); 
+    const members = useSelector((state) => state.allMembers.filterdMembers);
 
-                <div className={classes.details}>
-                    <CardContent className={classes.content}>
-                    <Typography component="h5" variant="h5">
-                    {Fname} {Lname}
-                    </Typography>
-                    <Typography variant="subtitle1" color="textSecondary">
-                        <b>{profession} {profession_add}</b>
-                    </Typography>
-                    <Typography variant="subtitle2" color="textSecondary">
-                        Whatsapp Id <a href={whatsapplink} >{phone_number1}</a>
-                    </Typography>
-                    <Typography color="default">
-                        Lives in - {city}  {country}
-                    </Typography>
-                    <Typography color="default">
-                        {blood}
-                    </Typography>
-                    </CardContent>
-                </div>
-            </Card>
-            <br></br>
-        </Grid>
-            
-        )
-        
-    });
-    return (
-        <>{renderList}</>
-    );
+    const handleViewClick = (memberId) => {
+      history.push(`/member/${memberId}`);
+  };
+
+    const renderList =  members.map((member) => {
+      const { id, Fname, Lname, city, phone_number1, phone_number2, country, blood, profession, profession_add } = member;
+      const imgSrc = 'https://2005-rcm-photos.s3.amazonaws.com/'+id+'.jpeg';  
+      const whatsapplink = 'https://wa.me/'+phone_number1;
+      return (  
+          <Grid item md={6} className="sections" key={id}>
+              <Card className={classes.root}>
+                  <CardMedia
+                      className={classes.cover}
+                      image={imgSrc}
+                      title={Fname+' '+Lname}
+                  />
+
+                  <div className={classes.details}>
+                      <CardContent className={classes.content}>
+                      <Typography component="h5" variant="h5">
+                      {Fname} {Lname}
+                      </Typography>
+                      <Typography variant="subtitle1" color="textSecondary">
+                          <b>{profession} {profession_add}</b>
+                      </Typography>
+                      <Typography variant="subtitle2" color="textSecondary">
+                          Whatsapp Id <a href={whatsapplink} >{phone_number1}</a>
+                      </Typography>
+                      <Typography color="default">
+                          Lives in - {city}  {country}
+                      </Typography>
+                      <Typography color="default">
+                          {blood}
+                      </Typography>
+                      <Button variant="outlined" color="primary" onClick={() => handleViewClick(id)}>
+                          View
+                      </Button>
+                      </CardContent>
+                  </div>
+              </Card>
+              <br></br>
+          </Grid>
+              
+          )
+          
+      });
+      return (
+          <>{renderList}</>
+      );
     
 }
 
