@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import '../container/memberDetails.css';
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
 import mainImg from '../../src/images/mc-main.png';
 import qrCode from '../../src/images/qr.png';
 import rahalLogo from '../../src/images/logo.png';
+
+
+
 
 const MemberDetails = ({ match }) => {
     const memberId = match.params.id;
@@ -40,6 +45,28 @@ const MemberDetails = ({ match }) => {
     }
 
     const imgSrc = 'https://2005-rcm-photos.s3.amazonaws.com/'+memberId+'.jpeg';  
+    const fileNm = 'rcm2005_'+memberDetails.Fname+'.pdf';
+
+    const captureScreenshot = () => {
+        const element = document.getElementById("memberCard");
+        if (element) {
+          html2canvas(element).then((canvas) => {
+            const imgData = canvas.toDataURL("image/jpeg");
+            const pdf = new jsPDF();
+            const imgWidth = 210; // A4 size: 210mm x 297mm
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    
+            pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+            pdf.save(fileNm);
+          });
+        } else {
+          console.error('Element with id "pdf-content" not found.');
+        }
+      };
+    
+      const onDownloadClick = () => {
+        setTimeout(captureScreenshot, 1000);
+      };
 
     // Render the detailed member information here
     return (
@@ -98,7 +125,7 @@ const MemberDetails = ({ match }) => {
             </div>
             
             <div className="button-wrapper">
-                <button className="btn">Download</button>
+                <button onClick={onDownloadClick} className="btn">Download</button>
             </div>
             
 
