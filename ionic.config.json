@@ -1,0 +1,7 @@
+{
+    "name": "oba2005",
+    "integrations": {
+      "capacitor": {}
+    },
+    "type": "react"
+  }

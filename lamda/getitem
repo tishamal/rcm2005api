@@ -1,0 +1,36 @@
+const AWS = require('aws-sdk');
+const docClient = new AWS.DynamoDB.DocumentClient();
+
+const paramss = {
+  TableName : 'TestDB',
+  /* Item properties will depend on your application concerns */
+  Key: {
+    id: '123'
+  }
+}
+
+async function getItem(event){
+  try {
+    const paramss = {
+      TableName : 'oba2005',
+      /* Item properties will depend on your application concerns */
+      Key: {
+        id: event['params']['path']['item']
+      }
+    }  
+    console.log(event['params']['path']['item'])
+    const data = await docClient.get(paramss).promise()
+    return data
+  } catch (err) {
+    return err
+  }
+}
+
+exports.handler = async (event, context) => {
+  try {
+    const data = await getItem(event)
+    return { body: JSON.stringify(data) }
+  } catch (err) {
+    return { error: err }
+  }
+}

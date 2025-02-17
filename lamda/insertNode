@@ -1,0 +1,18 @@
+exports.handler = async (event) => {
+  
+  const params = {
+  TableName : 'TestDB',
+  /* Item properties will depend on your application concerns */
+  Item: {
+     id: event['body-json']['id'],
+     price: event['body-json']['price']
+    }
+  }
+  
+  try {
+    await createItem(params)
+    return { body: 'Successfully created item!'}
+  } catch (err) {
+    return { error: err }
+  }
+};

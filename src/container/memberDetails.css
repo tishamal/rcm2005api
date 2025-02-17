@@ -1,0 +1,143 @@
+.member-card{
+    width: 100%;
+    max-width: 720px;
+    height: auto;
+    margin: 0 auto;
+}
+.pdf-pg{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;   
+    box-shadow: 0 2px 16px #999;
+}
+
+.pg-1{
+    margin-bottom: 15px;
+    background-color: #061b34;
+}
+.pg-1 img{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    vertical-align: middle;
+}
+.pg-2{
+    background: url('../images/pg2-bg.png') center center #fff;
+    background-size: cover;
+    padding: 5% 6.5% 2% 6.5%;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.row-1,
+.row-2,
+.row-3{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.main-details,
+.note,
+.contact{
+    width: 65%;
+}
+.main-details p{
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 16px;
+    margin-top: 4px;
+}
+.main-details p span{
+    font-family: Arial, Helvetica, sans-serif;
+}
+.main-details p span.label{
+    font-weight: 700;
+    margin-right: 12px;
+    font-size: 19px;
+}
+.prof-img-wrapper{
+    width: 25%;
+    min-width: 48px;
+}
+.prof-img{
+    border: 2px solid #878787;
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.prof-img img{
+    width: 100%;
+    vertical-align: middle;
+}
+.note p{
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: justify;
+    text-transform: uppercase;
+}
+.contact{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
+}
+.qr{
+    height: 100px; 
+    width: 100px;
+}
+
+.cont-details{
+    padding-top: 3px;
+}
+.cont-details ul{
+    margin: 0 0 0 5px;
+    padding: 0;
+}
+.cont-details ul li{
+    list-style-type: none;
+    padding: 0;
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.logo{
+    width: 32%;
+}
+
+.row-3{
+    align-items: flex-end;
+}
+
+.logo img{
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.button-wrapper{
+    display: flex;
+    justify-content: center;
+    padding: 40px 10px;
+    align-items: center;
+}
+.button-wrapper .btn{
+    display: block;
+    background-color: #1c4596;
+    color: #fff;
+    padding: 12px 22px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.button-wrapper .btn:hover{
+    background-color: #0f336d;
+}
+
+@media only screen and (max-width: 700px) {
+    .note {
+      width: 100%;
+    }
+  }

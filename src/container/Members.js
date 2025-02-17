@@ -30,22 +30,19 @@ const Members = () => {
                 console.log(err)
             });
         dispatch(setMembers(response.data.body))
-        console.log(response.data.body)
+
     };
 
     useEffect(() => {
         fetchMembers();
     },[]);
-    console.log('fetch')
 
     const filter =async () =>{  
 
       let city = document.getElementById('city.id').value;
       let fname = document.getElementById('fname.id').value;
       let lname = document.getElementById('lname.id').value;
-      console.log(city);
-      console.log(blood);
-      console.log(profession);
+
       let filterd =members;
       if (fname !== '') {
         filterd = filterd.filter(u => u.Fname.toLowerCase().includes(fname.toLowerCase()));
@@ -82,11 +79,10 @@ const Members = () => {
     const professions = members.map(b => b.profession);
     const uniqueprofessions = professions.filter((q, idx) => professions.indexOf(q) === idx)
 
-    console.log(uniqueprofessions);
 
     return (
       <div>
-          <h3 className={classes.heading}>2005 Api Welcome to the Brother Hood</h3>
+          <h3 className={classes.heading}>2005 Api Welcome to the Brother Hood - {bloodGrooups.length} Members</h3>
           <div>
           
           <Grid container spacing={1} className="sections">

@@ -1,0 +1,58 @@
+import boto3
+import csv
+
+def lambda_handler(event, context):
+    region='us-east-1'
+    recList=[]
+    try:            
+        s3=boto3.client('s3')            
+        dyndb = boto3.client('dynamodb',region_name=region)
+        confile= s3.get_object(Bucket='csv-s3', Key='2005obamembers.csv')
+        recList = confile['Body'].read().split('\n')
+        firstrecord=True
+        csv_reader = csv.reader(recList, delimiter=',', quotechar='"')
+        for row in csv_reader:
+            if (firstrecord):
+                firstrecord=False
+                continue
+            id = row[0].replace(',','').replace('$','') if row[1] else 0
+            grade_addmission = row[1].replace(',','').replace('$','') if row[1] else '-'
+            f_name = row[2].replace(',','').replace('$','') if row[2] else '-'
+            l_name = row[3].replace(',','').replace('$','') if row[2] else '-'
+            email = row[4].replace(',','').replace('$','') if row[2] else '-'
+            address = row[5].replace(',','').replace('$','') if row[2] else '-'
+            country = row[6].replace(',','').replace('$','') if row[2] else '-'
+            phone1 = row[7].replace(',','').replace('$','') if row[2] else '-'
+            phone2 = row[8].replace(',','').replace('$','') if row[2] else '-'
+            nic = row[9].replace(',','').replace('$','') if row[2] else '-'
+            house = row[10].replace(',','').replace('$','') if row[2] else '-'
+            blood = row[11].replace(',','').replace('$','') if row[2] else '-'
+            profession = row[12].replace(',','').replace('$','') if row[2] else '-'
+            profession_add = row[13].replace(',','').replace('$','') if row[2] else '-'
+            city = row[14].replace(',','').replace('$','') if row[2] else '-'
+            comment = row[15].replace(',','').replace('$','') if row[2] else '-'
+
+            response = dyndb.put_item(
+                TableName='rahalapi2005',
+                Item={
+                'id' : {'S':str(id)},
+                'Fname': {'S':f_name},
+                'Lname': {'S':l_name},
+                'grade_addmission': {'S':grade_addmission},
+                'email': {'S':email},
+                'phone_number1': {'S':phone1},
+                'phone_number2': {'S':phone2},
+                'country': {'S':country},
+                'nic': {'S':nic},
+                'house': {'S':house},
+                'blood': {'S':str(blood)},
+                'profession': {'S':profession},
+                'city': {'S':city},
+                'profession_add': {'S':profession_add},
+                'comment': {'S':comment},
+                'address': {'S':address},
+                }
+            )
+        print('Put succeeded:')
+    except Exception, e:
+        print (str(e))
