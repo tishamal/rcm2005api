@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import '../container/memberDetails.css';
+import {QRCodeCanvas} from 'qrcode.react';
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import mainImg from '../../src/images/mc-main.png';
-import qrCode from '../../src/images/qr.png';
 import rahalLogo from '../../src/images/logo.png';
 
 
@@ -12,6 +12,7 @@ import rahalLogo from '../../src/images/logo.png';
 
 const MemberDetails = ({ match }) => {
     const memberId = match.params.id;
+    const profImage = memberId+'.jpeg';
     const [memberDetails, setMemberDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -19,7 +20,7 @@ const MemberDetails = ({ match }) => {
     useEffect(() => {
         const fetchMemberDetails = async () => {
             try {
-                // const response = await axios.get(`https://l0qhsrip30.execute-api.us-east-1.amazonaws.com/Staging/api/item/${memberId}`);
+                //const response = await axios.get(`https://l0qhsrip30.execute-api.us-east-1.amazonaws.com/Staging/api/item/${memberId}`);
                 const response = await axios.get("https://l0qhsrip30.execute-api.us-east-1.amazonaws.com/Staging/api/item");
                 let member = response.data.body.filter(u => u.id == memberId);
                 console.log(member[0]);
@@ -44,29 +45,29 @@ const MemberDetails = ({ match }) => {
         return <div>Error: {error}</div>;
     }
 
-    const imgSrc = 'https://2005-rcm-photos.s3.amazonaws.com/'+memberId+'.jpeg';  
-    const fileNm = 'rcm2005_'+memberDetails.Fname+'.pdf';
-
-    const captureScreenshot = () => {
-        const element = document.getElementById("memberCard");
-        if (element) {
-          html2canvas(element).then((canvas) => {
-            const imgData = canvas.toDataURL("image/jpeg");
-            const pdf = new jsPDF();
-            const imgWidth = 210; // A4 size: 210mm x 297mm
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-    
-            pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-            pdf.save(fileNm);
-          });
-        } else {
-          console.error('Element with id "pdf-content" not found.');
-        }
-      };
+    const fileNm = 'RCM OBA 2005 '+memberDetails.Fname+' '+memberDetails.Lname+'.pdf';
+    const qrCode = 'https://members.rahalapi2005.lk/member/'+memberId;
     
       const onDownloadClick = () => {
-        setTimeout(captureScreenshot, 1000);
+        const element = document.getElementById('memberCard');
+        if (element) {
+            html2canvas(element).then((canvas) => {
+           const imgData = canvas.toDataURL('image/png');
+           const pdf = new jsPDF();
+           const imgWidth = 210; // A4 size: 210mm x 297mm
+           const imgHeight = (canvas.height * imgWidth) / canvas.width;
+           pdf.addImage(imgData, 'JPEG', 0, 0);
+           pdf.output('dataurlnewwindow');
+               
+           pdf.save(fileNm);
+         })
+        } else {
+            console.error('Element with id "pdf-content" not found.');
+        }
+       ;
       };
+
+
 
     // Render the detailed member information here
     return (
@@ -87,7 +88,7 @@ const MemberDetails = ({ match }) => {
                                 </div>
                                 <div className="prof-img-wrapper">
                                     <div className="prof-img">
-                                        <img src={imgSrc} alt={memberDetails.Fname} />
+                                        <img src={`/${profImage}`} alt={memberDetails.Fname} />
                                     </div>
                                     
                                 </div>
@@ -96,12 +97,13 @@ const MemberDetails = ({ match }) => {
                                 <div className="note">
                                     <p>This card certifies the holder's membership in the Rahula COllege Old Boys Association, class of 2005. It grants access to the full range of privileges associated with the designated membership level for the duration specified herein. Issuance of this card is sanctioned by the committee. Any loss of the card must be reported to the association immidiately.</p>
                                 </div>
+                                <div className="qr">
+                                        <QRCodeCanvas value={qrCode} />
+                                </div>
                             </div>
                             <div className="row-3">
                                 <div className="contact">
-                                    <div className="qr">
-                                        <img src={qrCode} alt="qr-code" />
-                                    </div>
+                                    
                                     <div className="cont-details">
                                         <ul>
                                             <li>Rahula College Old Boys Association of 2005</li>

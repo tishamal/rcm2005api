@@ -85,11 +85,10 @@
     position: relative;
 }
 .qr{
-    width: 25%;
+    height: 100px; 
+    width: 100px;
 }
-.qr img{
-    width: 100%;
-}
+
 .cont-details{
     padding-top: 3px;
 }
